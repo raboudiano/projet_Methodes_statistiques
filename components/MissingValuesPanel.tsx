@@ -10,7 +10,7 @@ interface MissingValuesPanelProps {
 
 export default function MissingValuesPanel({ data, headers }: MissingValuesPanelProps) {
   const missingAnalysis = headers.map(header => detectMissing(data, header));
-  const totalMissing = missingAnalysis.reduce((sum, m) => sum + parseInt(m.missing), 0);
+  const totalMissing = missingAnalysis.reduce((sum, m) => sum + m.missing, 0);
   const totalCells = data.length * headers.length;
 
   const chartData = missingAnalysis.map(m => ({
@@ -67,13 +67,13 @@ export default function MissingValuesPanel({ data, headers }: MissingValuesPanel
                 <tr key={idx} className="border-b border-gray-200 hover:bg-gray-50">
                   <td className="px-4 py-2 text-gray-800 font-medium">{m.column}</td>
                   <td className="px-4 py-2 text-center text-red-600 font-bold">{m.missing}</td>
-                  <td className="px-4 py-2 text-center text-green-600 font-bold">{data.length - parseInt(m.missing)}</td>
+                  <td className="px-4 py-2 text-center text-green-600 font-bold">{data.length - m.missing}</td>
                   <td className="px-4 py-2 text-right text-gray-700">
                     <div className="flex items-center justify-end gap-2">
                       <div className="w-20 bg-gray-200 rounded-full h-2">
                         <div
-                          className={`h-2 rounded-full ${parseInt(m.missing) > 0 ? 'bg-red-500' : 'bg-green-500'}`}
-                          style={{ width: `${(parseInt(m.missing) / data.length) * 100}%` }}
+                          className={`h-2 rounded-full ${m.missing > 0 ? 'bg-red-500' : 'bg-green-500'}`}
+                          style={{ width: `${(m.missing / data.length) * 100}%` }}
                         ></div>
                       </div>
                       <span className="font-medium">{m.percentage}%</span>
@@ -108,7 +108,7 @@ export default function MissingValuesPanel({ data, headers }: MissingValuesPanel
         <ul className="text-yellow-800 text-sm space-y-1">
           {missingAnalysis.map((m, idx) => (
             <li key={idx}>
-              • <strong>{m.column}:</strong> {m.missing === '0' ? 'No missing values' : `${m.missing} missing value(s) (${m.percentage}%)`}
+              • <strong>{m.column}:</strong> {m.missing === 0 ? 'No missing values' : `${m.missing} missing value(s) (${m.percentage}%)`}
             </li>
           ))}
         </ul>

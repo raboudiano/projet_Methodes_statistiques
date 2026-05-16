@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { BarChart, Bar, HistogramChart, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { calculateStats } from '@/lib/dataProcessor';
 
 interface StatisticsPanelProps {
